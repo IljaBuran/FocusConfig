@@ -32,7 +32,7 @@
 
 maximize_on_start:                                  false
 open_on_the_biggest_monitor:                        false
-cursor_as_block:                                    false
+cursor_as_block:                                    true
 cursor_blink_time_in_seconds:                       5
 highlight_selection_occurrences:                    true
 highlight_line_with_cursor:                         true
@@ -55,14 +55,14 @@ colored_titlebar:                                   true   # Windows 11+ only
 dark_titlebar:                                      false  # Windows only
 hide_mouse_when_typing:                             false
 draw_indent_guides:                                 false
-auto_surround_with_brackets_and_quotes:             false
-auto_close_brackets:                                true
+auto_surround_with_brackets_and_quotes:             true
+auto_close_brackets:                                false
 prefer_system_file_dialogs:                         false  # Windows only
 persist_local_search_results:                       false  # if true, search results will stay highlighted and you have to dismiss them using the `escape` action
 load_most_recent_project_on_start:                  true
 projects_sorting_order:                             most_recent_first
 
-build_panel_stays_in_one_place:                     false  # if false, the build panel will flip to the inactive pane in two pane layouts
+build_panel_stays_in_one_place:                     true  # if false, the build panel will flip to the inactive pane in two pane layouts
 build_panel_line_wrap_always_on:                    true
 build_panel_width_percent:                          50
 build_panel_height_percent:                         50
@@ -187,33 +187,31 @@ Ctrl-Shift-S                save_as
 Alt-Minus                   move_to_previous_editor_history
 Alt-Plus                    move_to_next_editor_history
 
-Ctrl-PageUp                 move_to_previous_buffer
-Ctrl-PageDown               move_to_next_buffer
+Ctrl-Minus                  move_to_previous_buffer
+Ctrl-Plus                   move_to_next_buffer
 
 Ctrl-/                      toggle_comment
 Ctrl-L                      select_line
 
 Alt-K                       scroll_viewport_up
-Alt-E                       scroll_viewport_up_fast  # for some reason Alt-U didn't reach the window at all, so using Alt-E instead
+Alt-W                       scroll_viewport_up_fast  # for some reason Alt-U didn't reach the window at all, so using Alt-E instead
 Alt-PageUp                  scroll_viewport_up_fast
 Alt-J                       scroll_viewport_down
-Alt-D                       scroll_viewport_down_fast
+Alt-S                       scroll_viewport_down_fast
 Alt-PageDown                scroll_viewport_down_fast
-Alt-H                       scroll_viewport_left
-Alt-L                       scroll_viewport_right
+Alt-A                       scroll_viewport_left
+Alt-D                       scroll_viewport_right
 
-Ctrl-Alt-ArrowUp            scroll_viewport_up
-Ctrl-Alt-ArrowDown          scroll_viewport_down
-Ctrl-Alt-ArrowLeft          scroll_viewport_left
-Ctrl-Alt-ArrowRight         scroll_viewport_right
+#Ctrl-Alt-ArrowUp            scroll_viewport_up
+#Ctrl-Alt-ArrowDown          scroll_viewport_down
 
 Alt-C                       move_cursor_to_viewport_center
 
 {Shift}-Ctrl-ArrowUp        move_up_to_empty_line
 {Shift}-Ctrl-ArrowDown      move_down_to_empty_line
 
-Alt-Shift-I                 add_cursors_to_line_ends
-Alt-Shift-Ctrl-I            add_cursors_to_line_starts
+Ctrl-Alt-ArrowRight         add_cursors_to_line_ends
+Ctrl-Alt-ArrowLeft          add_cursors_to_line_starts
 
 Enter                       break_line
 Ctrl-Enter                  new_line_below_without_breaking
@@ -237,7 +235,6 @@ Ctrl-Shift-N                create_new_file_on_the_side
 Alt-Shift-ArrowUp           create_cursor_above
 Alt-Shift-ArrowDown         create_cursor_below
 
-Alt-A                       align_cursors
 
 Alt-Z                       toggle_line_wrap
 Alt-Shift-L                 toggle_line_numbers
@@ -344,8 +341,8 @@ Shift-Tab                   focus_previous_ui_element
 
 {Shift}-Home                jump_to_line_start
 {Shift}-End                 jump_to_line_end
-{Shift}-Ctrl-Home           jump_to_file_start
-{Shift}-Ctrl-End            jump_to_file_end
+Ctrl-Alt-ArrowUp            jump_to_file_start
+Ctrl-Alt-ArrowDown          jump_to_file_end
 {Shift}-Ctrl-M              jump_to_matching_bracket
 
 {Shift}-Backspace           delete_left_char

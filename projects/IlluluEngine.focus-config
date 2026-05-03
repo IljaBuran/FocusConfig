@@ -5,31 +5,31 @@
 D:\Projects\Illulu\Illulu\IlluluEngine\Source
 D:\Projects\Illulu\Resources\Shaders
 
-# [[build commands]]
-# open_panel_on_build:               true  #  <- any settings specified here will apply to all commands unless overridden
-# close_panel_on_success:            false
-# clear_build_output_before_running: false
-# error_regex:                       ^(?P<file>.*)\((?P<line>\d+),?(?P<col>\d+)?\)[ ]?: (?P<type>error|warning) (?P<msg>.*)$
-# auto_jump_to_error:                true
+[[build commands]]
+open_panel_on_build:               true  #  <- any settings specified here will apply to all commands unless overridden
+close_panel_on_success:            false
+clear_build_output_before_running: false
+error_regex:                       ^(?P<file>.*)\((?P<line>\d+),?(?P<col>\d+)?\)[ ]?: (?P<type>error|warning) (?P<msg>.*)$
+auto_jump_to_error:                true
 
-# build_working_dir:      D:\Projects\Illulu\
-# run_working_dir:        D:\Projects\Illulu\
+build_working_dir:      D:\Projects\Illulu\
+run_working_dir:        D:\Projects\Illulu\
 
-# [Debug Build]
-# build_command:          build.bat /debug
-# key_binding:            Ctrl-1
+[Debug Build]
+build_command:          build.bat /debug
+key_binding:            Ctrl-1
 
-# [Debug Run]
-# run_command:            cmd /C "pushd Build\Debug && Illulu.exe && popd"
-# key_binding:            Ctrl-2
+[Debug Run]
+run_command:            cmd /C "pushd Build\Debug && Illulu.exe && popd"
+key_binding:            Ctrl-2
 
-# [Release Build]
-# build_command:          build.bat /release
-# key_binding:            Ctrl-3
+[Release Build]
+build_command:          build.bat /release
+key_binding:            Ctrl-3
 
-# [Release Run]
-# run_command:            Build/Release/Illulu.exe
-# key_binding:            Ctrl-4
+[Release Run]
+run_command:            Build/Release/Illulu.exe
+key_binding:            Ctrl-4
 
 # Example error regexes:
 # For jai:    ^(?P<file>.*):(?P<line>\d+),(?P<col>\d+): (?P<type>Error|Warning|Info|...):* (?P<msg>.*)|^(?P<msg1>.*error LNK.*)
