@@ -1,4 +1,4 @@
-[16]  # Version number. Do not delete.
+[25]  # Version number. Do not delete.
 
 [[workspace]]
 # These directories and files will be scanned when a workspace is opened so that search etc. works.
@@ -29,7 +29,6 @@
 
 
 [[settings]]
-
 maximize_on_start:                                  false
 open_on_the_biggest_monitor:                        false
 cursor_as_block:                                    true
@@ -38,7 +37,6 @@ highlight_selection_occurrences:                    true
 highlight_line_with_cursor:                         true
 highlight_matching_brackets:                        true
 show_paste_effect:                                  true
-disable_file_open_close_animations:                 false
 double_shift_to_search_in_workspace:                false
 strip_trailing_whitespace_on_save:                  all  # options: all, except_lines_with_cursor, disabled
 smooth_scrolling:                                   true
@@ -47,7 +45,6 @@ line_height_scale_percent:                          110
 max_editor_width:                                   -1
 can_cancel_go_to_line:                              true
 copy_whole_line_without_selection:                  false
-editor_history_size:                                1024
 line_wrap_is_on_by_default:                         false
 show_line_numbers:                                  false
 show_ruler_at_column:                               0
@@ -88,7 +85,22 @@ scrollbar_width_scale:                              0.9
 scrollbar_min_opacity:                              0.0   # if you want the scrollbar to be always visible, set this to 1.0
 scrollbar_max_opacity:                              1.0
 scrollbar_fade_in_sensitivity:                      10.0  # controls when the scrollbar appears as the mouse pointer gets close
-scrollbar_fade_out_delay_seconds:                   2.0   # how long the scrollbar stays visible after scrolling
+scrollbar_fade_out_delay_seconds:                   1.0   # how long the scrollbar stays visible after scrolling
+
+active_pane_border_width:                           1.0   # set the width to 0.0 to disable
+inactive_pane_dim_overlay_opacity:                  0.0   # controls how dim the inactive panes should be
+
+comment_highlight_words1:                           todo, todo: # a comma-separated list of words to highlight within comments using the color `code_comment_highlight1`
+comment_highlight_words2:                           note, note:# words to highlight using `code_comment_highlight2`
+comment_highlight_words3:                           # words to highlight using `code_comment_highlight3`
+comment_highlight_words4:                           # words to highlight using `code_comment_highlight4`
+
+enable_temporary_editors:                           true  # when enabled, any editors are opened temporarily until an edit, a save, or a keep_editor command is used. Any newly opened editor will replace the existing temporary editor
+cursor_position_after_jump:                         0.45  # controls where the cursor ends up relatively to the viewport after jumping to a search result or an error. 0.0 is top of the screen, 1.0 - bottom, 0.5 - center
+closing_last_editor_in_pane_should_close_pane:      true
+closing_last_editor_should_exit_program:            false
+
+line_endings:                                       preserve  # options: lf, crlf, preserve
 
 # NOTE: some settings can be specified for a subset of files, based on their language or a wildcard,
 # for example:
@@ -130,10 +142,11 @@ draw_indent_guides:                                 false
 
 
 # Example error regexes:
-# For jai:    ^(?P<file>.*):(?P<line>\d+),(?P<col>\d+): (?P<type>Error|Warning|Info|...):* (?P<msg>.*)|^(?P<msg1>.*error LNK.*)
-# For msvc:   ^(?P<file>.*)\((?P<line>\d+),?(?P<col>\d+)?\)[ ]?: (?P<type>error|warning) (?P<msg>.*)$
-# For golang: ^(?P<file>.*):(?P<line>\d+):(?P<col>\d+): (?P<msg>.*)$
-# For gcc:    ^(?P<file>.*):(?P<line>\d+):(?P<col>\d+): (?P<type>error|warning): (?P<msg>.*) (\[(?P<msg1>.*)\])?$
+# For Jai:    ^(?P<file>.*):(?P<line>\d+),(?P<col>\d+): (?P<type>Error|Warning|Info|...):* (?P<msg>.*)|^(?P<msg1>.*error LNK.*)
+# For MSVC:   ^(?P<file>.*)\((?P<line>\d+),?(?P<col>\d+)?\)[ ]?: (?P<type>fatal error|error|warning) (?P<msg>.*)$
+# For Golang: ^(?P<file>.*):(?P<line>\d+):(?P<col>\d+): (?P<msg>.*)$
+# For Gcc:    ^(?P<file>.*):(?P<line>\d+):(?P<col>\d+): (?P<type>fatal error|error|warning): (?P<msg>.*)( \[(?P<msg1>.*)\])?$
+# For Odin:   ^(?P<file>.*)\((?P<line>\d+):(?P<col>\d+)\) (?P<type>Error|Syntax Error): (?P<msg>.*)$
 # ... let us know what regex works for you and we'll add it here
 
 # NOTE:
@@ -142,6 +155,8 @@ draw_indent_guides:                                 false
 # %FILE_DIR%  - the directory of the currently active file
 # %FILE_NAME% - current file name, with extension
 # %FILE_NAME_NO_EXTENSION% - current file name, without extension
+# %FILE_LINE%   - line under cursor in current file
+# %FILE_COLUMN% - column under cursor in current file
 # %BUILD_WORKING_DIR%  - working dir of the build command
 # %RUN_WORKING_DIR%    - working dir of the run command
 # %PROJECT_CONFIG_DIR% - the dir containing the active project config file
@@ -184,26 +199,29 @@ Ctrl-[                      unindent
 Ctrl-S                      save
 Ctrl-Shift-S                save_as
 
-Alt-Minus                   move_to_previous_editor_history
-Alt-Plus                    move_to_next_editor_history
+#TODO
+Alt-Minus                   cursor_go_back
+Alt-Plus                    cursor_go_forward
 
-Ctrl-Minus                  move_to_previous_buffer
-Ctrl-Plus                   move_to_next_buffer
+Ctrl-Minus                  go_to_previous_buffer
+Ctrl-Plus                   go_to_next_buffer
 
 Ctrl-/                      toggle_comment
 Ctrl-L                      select_line
 
-Alt-K                       scroll_viewport_up
+#Alt-K                       scroll_viewport_up
 Alt-W                       scroll_viewport_up_fast  # for some reason Alt-U didn't reach the window at all, so using Alt-E instead
-Alt-PageUp                  scroll_viewport_up_fast
-Alt-J                       scroll_viewport_down
+#Alt-PageUp                  scroll_viewport_up_fast
+#Alt-J                       scroll_viewport_down
 Alt-S                       scroll_viewport_down_fast
-Alt-PageDown                scroll_viewport_down_fast
+#Alt-PageDown                scroll_viewport_down_fast
 Alt-A                       scroll_viewport_left
 Alt-D                       scroll_viewport_right
 
 #Ctrl-Alt-ArrowUp            scroll_viewport_up
 #Ctrl-Alt-ArrowDown          scroll_viewport_down
+#Ctrl-Alt-ArrowLeft          scroll_viewport_left
+#Ctrl-Alt-ArrowRight         scroll_viewport_right
 
 Alt-C                       move_cursor_to_viewport_center
 
@@ -215,26 +233,39 @@ Ctrl-Alt-ArrowLeft          add_cursors_to_line_starts
 
 Enter                       break_line
 Ctrl-Enter                  new_line_below_without_breaking
-Shift-Enter            new_line_above_without_breaking
+Shift-Enter                 new_line_above_without_breaking
 
-NumpadEnter                 break_line
-Ctrl-NumpadEnter            new_line_below_without_breaking
-Ctrl-Shift-NumpadEnter      new_line_above_without_breaking
+#NumpadEnter                 break_line
+#Ctrl-NumpadEnter            new_line_below_without_breaking
+#Ctrl-Shift-NumpadEnter      new_line_above_without_breaking
 
-Alt-1                       switch_to_left_editor
-Alt-2                       switch_to_right_editor
-Alt-,                       switch_to_other_editor
-Alt-Shift-,                 duplicate_editor
+Alt-E ArrowLeft             move_editor_left
+Alt-E ArrowRight            move_editor_right
+Alt-E ArrowUp               move_editor_top
+Alt-E ArrowDown             move_editor_bottom
 
-Ctrl-Alt-Shift-ArrowLeft    move_editor_to_the_left
-Ctrl-Alt-Shift-ArrowRight   move_editor_to_the_right
+Shift-Alt-E ArrowLeft       split_left
+Shift-Alt-E ArrowRight      split_right
+Shift-Alt-E ArrowUp         split_top
+Shift-Alt-E ArrowDown       split_bottom
+
+Ctrl-Alt-E ArrowLeft        duplicate_editor_left
+Ctrl-Alt-E ArrowRight       duplicate_editor_right
+Ctrl-Alt-E ArrowUp          duplicate_editor_top
+Ctrl-Alt-E ArrowDown        duplicate_editor_bottom
+
+Ctrl-Shift-,                duplicate_editor
+
+Ctrl-Shift-T                reopen_closed_editor
+Ctrl-Alt-S Enter            keep_editor
 
 Ctrl-N                      create_new_file
-Ctrl-Shift-N                create_new_file_on_the_side
+Ctrl-Shift-N                create_new_file_in_side_pane
 
 Alt-Shift-ArrowUp           create_cursor_above
 Alt-Shift-ArrowDown         create_cursor_below
 
+#Alt-A                       align_cursors
 
 Alt-Z                       toggle_line_wrap
 Alt-Shift-L                 toggle_line_numbers
@@ -243,9 +274,6 @@ Ctrl-Shift-Alt-N            open_another_editor_instance
 
 [open file dialog]
 
-Alt-Enter                   open_entry_on_the_side
-Alt-1                       open_entry_on_the_left
-Alt-2                       open_entry_on_the_right
 Shift-Enter                 open_entry_in_explorer
 
 Tab                         open_directory
@@ -254,10 +282,6 @@ Backspace                   pop_directory
 
 
 [search dialog]
-
-Alt-Enter                   open_entry_on_the_side
-Alt-1                       open_entry_on_the_left
-Alt-2                       open_entry_on_the_right
 
 Shift-Enter                 move_up  # an alternative way to move
 
@@ -272,7 +296,7 @@ Alt-R                       toggle_regex_search
 # For example, if "move_up" is not defined in [editors], the one in the [common] section will be matched.
 
 Alt-X                       show_commands
-Ctrl-Shift-P                show_commands
+#Ctrl-Shift-P                show_commands
 
 Ctrl-Alt-P                  switch_to_project
 
@@ -297,24 +321,45 @@ Ctrl-Shift-Z                redo
 Ctrl-D                      select_word
 Ctrl-A                      select_all
 
-Ctrl-K                      cut_to_end_of_line
+#Ctrl-K                      cut_to_end_of_line
 Ctrl-Shift-Delete           delete_to_end_of_line
 Ctrl-Shift-Backspace        delete_to_start_of_line
 
-Ctrl-W                      close_current_editor
-Ctrl-Shift-W                close_other_editor
+Ctrl-W                      close_editor
+
+Ctrl-Shift-W                close_pane
+#Ctrl-Shift-Alt-W            close_other_panes
+#Ctrl-Alt-W ArrowLeft        close_left_pane
+#Ctrl-Alt-W ArrowRight       close_right_pane
+#Ctrl-Alt-W ArrowUp          close_top_pane
+#Ctrl-Alt-W ArrowDown        close_bottom_pane
 
 Escape                      escape  # combines close_dialog and remove_additional_cursors
 
 Ctrl-Shift-L                toggle_expand
 
-Ctrl-B                      build_panel_toggle
-
-Alt-B                       build_panel_toggle_focus
+Ctrl-B                      toggle_build_panel
 
 F11                         toggle_fullscreen
 
-Enter                       open_entry_in_place
+Enter                       open_entry
+Ctrl-Enter                  open_entry_in_side_pane
+
+Ctrl-Alt-Shift-ArrowLeft    switch_to_left_pane
+Ctrl-Alt-Shift-ArrowRight   switch_to_right_pane
+Ctrl-Alt-Shift-ArrowUp      switch_to_top_pane
+Ctrl-Alt-Shift-ArrowDown    switch_to_bottom_pane
+# Ctrl-,                      switch_to_side_pane
+
+Alt-1                       switch_to_pane_1
+Alt-2                       switch_to_pane_2
+Alt-3                       switch_to_pane_3
+Alt-4                       switch_to_pane_4
+Alt-5                       switch_to_pane_5
+Alt-6                       switch_to_pane_6
+Alt-7                       switch_to_pane_7
+Alt-8                       switch_to_pane_8
+Alt-9                       switch_to_pane_9
 
 Tab                         focus_next_ui_element
 Shift-Tab                   focus_previous_ui_element
@@ -341,8 +386,8 @@ Shift-Tab                   focus_previous_ui_element
 
 {Shift}-Home                jump_to_line_start
 {Shift}-End                 jump_to_line_end
-Ctrl-Alt-ArrowUp            jump_to_file_start
-Ctrl-Alt-ArrowDown          jump_to_file_end
+Ctrl-Alt-ArrowUp          jump_to_file_start
+Ctrl-Alt-ArrowDown        jump_to_file_end
 {Shift}-Ctrl-M              jump_to_matching_bracket
 
 {Shift}-Backspace           delete_left_char
@@ -360,9 +405,9 @@ Ctrl-0                      reset_font_size_to_default
 Ctrl-MouseMiddle            reset_font_size_to_default
 
 F8                          go_to_next_build_error
-Ctrl-F8                     go_to_next_build_error_on_the_side
+Ctrl-F8                     go_to_next_build_error_in_side_pane
 Shift-F8                    go_to_previous_build_error
-Shift-Ctrl-F8               go_to_previous_build_error_on_the_side
+Shift-Ctrl-F8               go_to_previous_build_error_in_side_pane
 
 
 [[style]]
@@ -371,20 +416,14 @@ Shift-Ctrl-F8               go_to_previous_build_error_on_the_side
 font:          default
 font_ui:       default
 font_ui_bold:  default
-font_size:     14
+font_size:     16
 font_ui_size:  15
 anti_aliasing: lcd  # options: lcd, normal
 hinting:       true
 
 [colors]
-# background0:                            15212AFF
-# background1:                            10191FFF
-# background2:                            18262FFF
-# background3:                            1A2831FF
-# background4:                            21333FFF
-
-background0:                            151719FF
-background1:                            526C7DFF
+background0:                            13181EFF
+background1:                            151412FF
 background2:                            101418FF
 background3:                            1A2831FF
 background4:                            1C2429FF
@@ -400,8 +439,8 @@ region_warning:                         986032FF
 region_error:                           772222FF
 region_heredoc:                         090E12FF
 
-selection_active:                       FCEDFC26
-selection_inactive:                     FCEDFC26
+selection_active:                       FCEDFC19
+selection_inactive:                     FCEDFC14
 selection_highlight:                    FCEDFC26
 search_result_active:                   8E772EFF
 search_result_inactive:                 FCEDFC26
@@ -411,7 +450,7 @@ scrollbar_background:                   10191F4C
 cursor:                                 26B2B2FF
 cursor_inactive:                        196666FF
 paste_animation:                        1C4449FF
-splitter:                               21333FFF
+splitter:                               333B42FF
 splitter_hover:                         1C4449FF
 ruler:                                  FCEDFC26
 indent_guide:                           FCEDFC26
@@ -423,6 +462,8 @@ shadow_transparent:                     0E161C00
 text_input_label:                       3B4450FF
 char_under_cursor:                      FFFFFFFF
 bracket_highlight:                      E8FCFE30
+active_pane_border:                     F5F5F342
+inactive_pane_dim_overlay:              FAEB1017
 
 ui_default:                             BFC9DBFF
 ui_dim:                                 87919DFF
@@ -477,9 +518,14 @@ code_builtin_exception:                 E0AD82FF
 code_directive:                         E67D74FF
 code_directive_modifier:                E67D74FF
 
-code_header:                            E67D74FF
+code_header1:                           E67D74FF
 code_header2:                           E0AD82FF
 code_header3:                           E0AD82FF
 code_header4:                           E0AD82FF
 code_header5:                           E0AD82FF
 code_header6:                           E0AD82FF
+
+code_comment_highlight1:                E64234FF
+code_comment_highlight2:                C7AD12FF
+code_comment_highlight3:                E0AD82FF
+code_comment_highlight4:                D699B5FF
